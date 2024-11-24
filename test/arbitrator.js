@@ -1045,7 +1045,7 @@ contract("Registry Arbitrator", (accounts) => {
   });
 
   it("arbitrator change proposal - approve claim with proposal after timeout", async () => {
-    const { registry, vault, claimsManager, stakingToken, arbitrator } = await setup(accounts);
+    const { registry, claimsManager, arbitrator } = await setup(accounts);
     const newBounty = 6000;
     const newBeneficiary = accounts[5];
     const challengePeriod = 60*60*24*1;
@@ -1072,7 +1072,7 @@ contract("Registry Arbitrator", (accounts) => {
 
   // TODO: Do we want to allow the arbitrator to changed the proposed resolution after timeout or not allow that? (Anyone could front run it and approve before the arbitrator with the proposed parameters)
   it("arbitrator change proposal - approve claim with proposal after timeout shound not change data (even with arbitrator)", async () => {
-    const { registry, vault, claimsManager, stakingToken, arbitrator } = await setup(accounts);
+    const { registry, claimsManager, arbitrator } = await setup(accounts);
     const newBounty = 6000;
     const newBeneficiary = accounts[5];
     const challengePeriod = 60*60*24*1;
@@ -1099,7 +1099,7 @@ contract("Registry Arbitrator", (accounts) => {
   });
 
   it("arbitrator change proposal - approve claim with proposal after timeout cannot change claim data if not arbitrator", async () => {
-    const { registry, vault, claimsManager, stakingToken, arbitrator } = await setup(accounts);
+    const { registry, claimsManager, arbitrator } = await setup(accounts);
     const newBounty = 6000;
     const newBeneficiary = accounts[5];
     const challengePeriod = 60*60*24*1;
@@ -1252,7 +1252,7 @@ contract("Registry Arbitrator", (accounts) => {
   });
 
   it("expired unchallenged claim can be dismissed by anyone", async () => {
-    const { registry, claimsManager, arbitrator } = await setup(accounts);
+    const { registry, claimsManager } = await setup(accounts);
     const someAccount = accounts[5];
     const challengePeriod = 60*60*24*1;
     const challengeTimeOutPeriod = 60*60*24*2;
