@@ -6,7 +6,7 @@ pragma solidity 0.8.16;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./interfaces/IHATClaimsManager.sol";
 
-contract HATCommitteeArbitrator is Ownable {
+contract ExpertCommitteeArbitrator is Ownable {
     address public expertCommittee;
 
     error OnlyExpertCommittee();

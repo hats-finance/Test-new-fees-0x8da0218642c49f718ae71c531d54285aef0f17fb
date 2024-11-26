@@ -8,9 +8,9 @@ const UniSwapV3RouterMock = artifacts.require("./UniSwapV3RouterMock.sol");
 const TokenLockFactory = artifacts.require("./TokenLockFactory.sol");
 const HATTokenLock = artifacts.require("./HATTokenLock.sol");
 const RewardController = artifacts.require("./RewardController.sol");
-const HATCommitteeArbitrator = artifacts.require("./HATCommitteeArbitrator.sol");
+const ExpertCommitteeArbitrator = artifacts.require("./ExpertCommitteeArbitrator.sol");
 const utils = require("./utils.js");
-const IHATCommitteeArbitrator = new ethers.utils.Interface(HATCommitteeArbitrator.abi);
+const IExpertCommitteeArbitrator = new ethers.utils.Interface(ExpertCommitteeArbitrator.abi);
 const IHATClaimsManager = new ethers.utils.Interface(HATClaimsManager.abi);
 
 const { deployHATVaults } = require("../scripts/deployments/hatvaultsregistry-deploy.js");
@@ -76,7 +76,7 @@ const setup = async function(
     silent: true
   });
   hatVaultsRegistry = await HATVaultsRegistry.at(deployment.hatVaultsRegistry.address);
-  arbitratorContract = await HATCommitteeArbitrator.new(accounts[7]);
+  arbitratorContract = await ExpertCommitteeArbitrator.new(accounts[7]);
   await hatVaultsRegistry.setDefaultArbitrator(arbitratorContract.address);
   rewardController = await RewardController.at(
     deployment.rewardControllers[0].address
@@ -146,7 +146,7 @@ const setup = async function(
   await claimsManager.committeeCheckIn({ from: accounts[1] });
 };
 
-contract("HATCommitteeArbitrator", (accounts) => {
+contract("ExpertCommitteeArbitrator", (accounts) => {
   it("challenge - approve Claim ", async () => {
     await setup(accounts);
     const staker = accounts[1];
@@ -288,7 +288,7 @@ contract("HATCommitteeArbitrator", (accounts) => {
     await hatTimelockController.schedule(
       arbitratorContract.address,
       0, // value
-      IHATCommitteeArbitrator.encodeFunctionData("setExpertCommittee", [newExpertCommittee]),
+      IExpertCommitteeArbitrator.encodeFunctionData("setExpertCommittee", [newExpertCommittee]),
       "0x0000000000000000000000000000000000000000000000000000000000000000", // predecessor
       "0x0000000000000000000000000000000000000000000000000000000000000000", // salt
       60 * 60 * 24 * 7 // delay
@@ -301,7 +301,7 @@ contract("HATCommitteeArbitrator", (accounts) => {
     await hatTimelockController.execute(
       arbitratorContract.address, 
       0,
-      IHATCommitteeArbitrator.encodeFunctionData("setExpertCommittee", [newExpertCommittee]),
+      IExpertCommitteeArbitrator.encodeFunctionData("setExpertCommittee", [newExpertCommittee]),
       "0x0000000000000000000000000000000000000000000000000000000000000000",
       "0x0000000000000000000000000000000000000000000000000000000000000000"
     );

@@ -1,4 +1,4 @@
-# HATCommitteeArbitrator
+# ExpertCommitteeArbitrator
 
 
 
